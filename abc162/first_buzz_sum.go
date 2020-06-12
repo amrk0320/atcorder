@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 )
@@ -19,23 +20,14 @@ func nextInt() int {
 	return i
 }
 
-func nextString() string {
-	var s string
-	if sc.Scan() {
-		s = sc.Text()
-	}
-	return s
-}
-
 func main() {
 	sc.Split(bufio.ScanWords)
-	var gachaMap = map[string]bool{}
 	n := nextInt()
-	for i := 0; i < n; i++ {
-		s := nextString()
-		if 1 <= len(s) && len(s) <= 10 {
-			gachaMap[s] = true
+	var sum int
+	for i := 1; i <= n && i <= int(math.Pow(10, 6)); i++ {
+		if i%3 != 0 && i%5 != 0 {
+			sum += i
 		}
 	}
-	fmt.Println(len(gachaMap))
+	fmt.Println(sum)
 }

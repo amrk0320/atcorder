@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"math/big"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -19,23 +21,27 @@ func nextInt() int {
 	return i
 }
 
-func nextString() string {
-	var s string
-	if sc.Scan() {
-		s = sc.Text()
+func gcd(m, n int) int {
+	
+}
+
+func threeGcd(a, b, c int) int {
+	r := a%b
+	if 
+}
+
+var sum int
+
+func dfs(a, b, c int) {
+	for x := 1; x <= c; x++ {
+		for y := 1; x <= b; y++ {
+		}
 	}
-	return s
 }
 
 func main() {
 	sc.Split(bufio.ScanWords)
-	var gachaMap = map[string]bool{}
-	n := nextInt()
-	for i := 0; i < n; i++ {
-		s := nextString()
-		if 1 <= len(s) && len(s) <= 10 {
-			gachaMap[s] = true
-		}
-	}
-	fmt.Println(len(gachaMap))
+	k := nextInt()
+	dfs(k, k, k)
+	fmt.Println(sum)
 }
