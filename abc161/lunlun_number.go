@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"math"
 	"os"
 	"strconv"
 )
@@ -20,56 +19,75 @@ func nextInt() int {
 	return i
 }
 
-func isPrefixLunlun(i int) bool {
-	x := strconv.Itoa(i)
-	l, _ := strconv.Atoi(string(x[0]))
-	r, _ := strconv.Atoi(string(x[1]))
-	diff := r - l
-	if -1 <= diff && diff <= 1 {
-		return true
-	} else {
-		return false
-	}
-}
-
-func isLunlun(i int) (int, bool) {
-	x := strconv.Itoa(i)
-	for index := 1; index < len(x); index++ {
-		l, _ := strconv.Atoi(string(x[index-1]))
-		r, _ := strconv.Atoi(string(x[index]))
-		diff := r - l
-		if -1 <= diff && diff <= 1 {
-			continue
-		} else {
-			return -1, false
-		}
-	}
-	return i, true
-}
-
-func roundUp(i int) int {
-	str := strconv.Itoa(i)
-	base := int(math.Pow(float64(10), float64(len(str)-1)))
-	i = i - i%base + base
-	return i
-}
-
 func main() {
 	sc.Split(bufio.ScanWords)
 	k := nextInt()
 	var count int
-	var lunlun int
-	for i := 0; count <= k; {
-		if 10 <= i && i%10 != 0 && isPrefixLunlun(i) == false {
-			reset := roundUp(i)
-			i = reset
-			continue
+	var backLunluns []int
+
+	for i := 1; i < 10; i++ {
+		backLunluns = append(backLunluns, i)
+		count++
+		if count == k {
+			fmt.Println(i)
+			return
 		}
-		if num, ok := isLunlun(i); ok {
-			count++
-			lunlun = num
-		}
-		i++
 	}
-	fmt.Println(lunlun)
+	for d := 2; ; d++ {
+		var lunluns []int
+		for i := 0; i < len(backLunluns); i++ {
+			str := strconv.Itoa(backLunluns[i])
+			last := str[len(str)-1]
+			num, _ := strconv.Atoi(string(last))
+			v := backLunluns[i]*10 + num
+			if v%10 == 0 {
+				lunluns = append(lunluns, v)
+				count++
+				if count == k {
+					fmt.Println(v)
+					return
+				}
+				lunluns = append(lunluns, v+1)
+				count++
+				if count == k {
+					fmt.Println(v + 1)
+					return
+				}
+			} else if num == 9 {
+				lunluns = append(lunluns, v-1)
+				count++
+				if count == k {
+					fmt.Println(v - 1)
+					return
+				}
+				lunluns = append(lunluns, v)
+				count++
+				if count == k {
+					fmt.Println(v)
+					return
+				}
+			} else {
+				lunluns = append(lunluns, v-1)
+				count++
+				if count == k {
+					fmt.Println(v - 1)
+					return
+				}
+				lunluns = append(lunluns, v)
+				count++
+				if count == k {
+					fmt.Println(v)
+					return
+				}
+				lunluns = append(lunluns, v+1)
+				count++
+				if count == k {
+					fmt.Println(v + 1)
+					return
+				}
+			}
+		}
+		backLunluns = lunluns
+	}
+	fmt.Println(count)
 }
