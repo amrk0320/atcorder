@@ -51,7 +51,7 @@ var blackBorad []int
 
 func main() {
 	var scanSuccess bool = scanBlackBorad()
-	var try bool
+	var try bo
 	if scanSuccess {
 		try = true
 	}

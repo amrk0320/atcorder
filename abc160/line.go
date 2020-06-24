@@ -22,31 +22,24 @@ func nextInt() int {
 func main() {
 	sc.Split(bufio.ScanWords)
 	n, x, y := nextInt(), nextInt(), nextInt()
-	var lines = map[int]int{}
-	var shortcut = (x - 1) + (n - y) + 1
-	var shortcutPoint = shortcut + 1
-	var mountain = y - x
-
-	for k := 1; k <= n-1; k++ {
-		lines[k] = n - k
-		if k <= shortcut {
-			lines[k] += shortcutPoint - k
-			if k <= x {
-				lines[k] -= x - k
-			}
-			if k <= n-y {
-				lines[k] -= (n - y) - k
-			}
-			if k <= mountain {
-				lines[k] -= mountain + 1 - k
-			}
-		}
-		if shortcut < k {
-			lines[k] = 0
-		}
+	var loads = map[int]int{}
+	var q = make([]int, 0)
+	for i := 1; i <= n; i++ {
+		q = append(q, i)
 	}
-
-	for k := 1; k <= len(lines); k++ {
-		fmt.Println(lines[k])
+	for len(q) != 0 {
+		i := q[0]
+		for jIndex := 1; jIndex < len(q); jIndex++ {
+			j := q[jIndex]
+			var load = j - i
+			if i <= x && y <= j {
+				load = (x - i) + 1 + (j - y)
+			}
+			loads[load]++
+		}
+		q = q[1:] // pop
+	}
+	for i := 1; i < n; i++ {
+		fmt.Println(loads[i])
 	}
 }
