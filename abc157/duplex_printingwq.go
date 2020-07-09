@@ -21,5 +21,10 @@ func nextInt() int {
 
 func main() {
 	sc.Split(bufio.ScanWords)
-	fmt.Println()
+	n := nextInt()
+	if n%2 == 0 {
+		fmt.Println(n / 2)
+	} else {
+		fmt.Println((n + 1) / 2)
+	}
 }
